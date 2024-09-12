@@ -12,13 +12,13 @@ vim.cmd [[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=jso
 ---@module 'lazy'
 ---@type LazySpec
 return {
-  --  {
-  --    'saecki/crates.nvim',
-  --    tag = 'stable',
-  --    config = function()
-  --      require('crates').setup()
-  --    end,
-  --  },
+  {
+    'saecki/crates.nvim',
+    tag = 'stable',
+    config = function()
+      require('crates').setup()
+    end,
+  },
   {
     'mrcjkb/rustaceanvim',
     version = '^5', -- Recommended
