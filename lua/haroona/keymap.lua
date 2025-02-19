@@ -4,6 +4,7 @@ local chatgpt = require 'chatgpt'
 wk.add {
   group = '[C]hatGPT',
   { '<leader>C', group = '[C]hat GPT' }, -- group
+  { '<leader>CC', '<cmd>ChatGPTCompleteCode<CR>', desc = '[C]omplete Code', mode = 'n' },
   { '<leader>Ce', '<cmd>ChatGPTEditWithInstruction<CR>', desc = '[E]dit with instructions', mode = 'n' },
   { '<leader>Cg', '<cmd>ChatGPTRun grammar_correction<CR>', desc = '[G]rammar Correction', mode = { 'n', 'v' } },
   { '<leader>Ct', '<cmd>ChatGPTRun translate<CR>', desc = '[T]ranslate', mode = { 'n', 'v' } },
