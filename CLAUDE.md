@@ -32,11 +32,6 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 - **TypeScript**: TypeScript tools integration available
 - **Lua**: Full LSP support with lua_ls
 
-#### AI Integration
-- ChatGPT integration via ChatGPT.nvim plugin
-- Extensive keybindings under `<leader>C` for AI-powered code assistance
-- Supports code completion, editing, optimization, and documentation generation
-
 #### Key Custom Keybindings
 - ChatGPT functions: `<leader>C*` (complete, edit, translate, optimize, etc.)
 - Snacks.nvim picker and utilities override many default telescope bindings
