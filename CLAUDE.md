@@ -36,6 +36,7 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 - ChatGPT functions: `<leader>C*` (complete, edit, translate, optimize, etc.)
 - Snacks.nvim picker and utilities override many default telescope bindings
 - Custom file explorer and search functionality via Snacks
+- See HOTKEYS.md for a complete keybinding reference
 
 ## Common Commands
 
