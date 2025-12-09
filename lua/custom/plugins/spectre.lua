@@ -9,7 +9,7 @@ return {
   cmd = 'Spectre', -- Lazy load on command
   keys = {
     {
-      '<leader>S',
+      '<leader>SS',
       function()
         require('spectre').toggle()
       end,
