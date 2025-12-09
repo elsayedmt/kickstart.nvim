@@ -70,6 +70,40 @@ Quick reference for useful Neovim keybindings in this configuration.
 ## Git (Gitsigns)
 - `<leader>h*` - Git hunk operations (stage, reset, preview, blame, etc.)
 
+## Harpoon (Quick File Navigation)
+- `<leader>ma` - Add current file to Harpoon
+- `<leader>mm` - Toggle Harpoon menu
+- `<leader>1` - Jump to Harpoon file 1
+- `<leader>2` - Jump to Harpoon file 2
+- `<leader>3` - Jump to Harpoon file 3
+- `<leader>4` - Jump to Harpoon file 4
+- `<leader>mp` - Previous Harpoon file
+- `<leader>mn` - Next Harpoon file
+- `<leader>mc` - Clear all Harpoon marks
+
+## Search and Replace (Spectre)
+- `<leader>S` - Toggle Spectre (project-wide search/replace)
+- `<leader>Sw` - Replace current word
+- `<leader>Sr` - Replace selection (visual mode)
+- `<leader>Sf` - Replace in current file
+
+## Refactoring (refactoring.nvim)
+- `<leader>xe` - Extract function (visual mode)
+- `<leader>xf` - Extract function to file (visual mode)
+- `<leader>xv` - Extract variable (visual mode)
+- `<leader>xb` - Extract block (visual mode)
+- `<leader>xF` - Extract block to file (visual mode)
+- `<leader>xi` - Inline variable
+- `<leader>xI` - Inline function
+- `<leader>xp` - Insert debug print statement
+- `<leader>xc` - Cleanup debug statements
+- `<leader>xx` - Select refactoring operation (menu)
+
+## Markdown
+<!-- Markdown preview disabled - requires yarn
+- `<leader>mp` - Toggle markdown preview in browser
+-->
+
 ## Plugin Commands
 - `:Lazy` - Open lazy.nvim plugin manager
 - `:Mason` - Open Mason LSP/tool installer
