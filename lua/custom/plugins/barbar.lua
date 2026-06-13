@@ -30,5 +30,10 @@ end
 vim.g.barbar_auto_setup = false
 key_maps()
 
-vim.pack.add { { src = 'https://github.com/romgrk/barbar.nvim' } }
+-- nvim-web-devicons is a real dependency: barbar checks for it directly, and the
+-- mini.icons devicons mock only runs when vim.g.have_nerd_font is set.
+vim.pack.add {
+  { src = 'https://github.com/nvim-tree/nvim-web-devicons' },
+  { src = 'https://github.com/romgrk/barbar.nvim' },
+}
 require('barbar').setup {}
