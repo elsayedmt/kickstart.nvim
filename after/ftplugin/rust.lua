@@ -1,3 +1,11 @@
+-- Load rustaceanvim on first Rust buffer (it provides :RustLsp used below)
+if not vim.g.__rustaceanvim_loaded then
+  vim.g.__rustaceanvim_loaded = true
+  vim.pack.add { { src = 'https://github.com/mrcjkb/rustaceanvim' } }
+  -- re-fire so rustaceanvim attaches to the current buffer
+  vim.api.nvim_exec_autocmds('FileType', { buffer = vim.api.nvim_get_current_buf(), modeline = false })
+end
+
 local bufnr = vim.api.nvim_get_current_buf()
 
 -- Rust-specific keybindings using rustaceanvim

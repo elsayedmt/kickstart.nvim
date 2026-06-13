@@ -1,3 +1,7 @@
+-- Load crates.nvim for TOML buffers (Cargo.toml dependency management)
+vim.pack.add { { src = 'https://github.com/saecki/crates.nvim' } }
+require('crates').setup {}
+
 local crates = require 'crates'
 local opts = { silent = true }
 
