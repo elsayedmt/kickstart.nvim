@@ -1,12 +1,7 @@
-return {
-  'NeogitOrg/neogit',
-  dependencies = {
-    'nvim-lua/plenary.nvim', -- required
-    'sindrets/diffview.nvim', -- optional - Diff integration
-
-    -- Only one of these is needed, not both.
-    'nvim-telescope/telescope.nvim', -- optional
-    'ibhagwan/fzf-lua', -- optional
-  },
-  config = true,
+-- Neogit: Git TUI, with diffview integration
+vim.pack.add {
+  { src = 'https://github.com/nvim-lua/plenary.nvim' },
+  { src = 'https://github.com/sindrets/diffview.nvim' },
+  { src = 'https://github.com/NeogitOrg/neogit' },
 }
+require('neogit').setup {}
