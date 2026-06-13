@@ -67,6 +67,10 @@ Quick reference for useful Neovim keybindings in this configuration.
 - `sd'` - Surround delete quotes
 - `sr)'` - Surround replace parentheses with quotes
 
+## File Explorer
+- `-` - Open parent directory (oil.nvim)
+- `<leader>e` - Toggle file explorer (Snacks explorer)
+
 ## Git (Gitsigns)
 - `<leader>h*` - Git hunk operations (stage, reset, preview, blame, etc.)
 
@@ -87,25 +91,9 @@ Quick reference for useful Neovim keybindings in this configuration.
 - `<leader>Sr` - Replace selection (visual mode)
 - `<leader>Sf` - Replace in current file
 
-## Refactoring (refactoring.nvim)
-- `<leader>xe` - Extract function (visual mode)
-- `<leader>xf` - Extract function to file (visual mode)
-- `<leader>xv` - Extract variable (visual mode)
-- `<leader>xb` - Extract block (visual mode)
-- `<leader>xF` - Extract block to file (visual mode)
-- `<leader>xi` - Inline variable
-- `<leader>xI` - Inline function
-- `<leader>xp` - Insert debug print statement
-- `<leader>xc` - Cleanup debug statements
-- `<leader>xx` - Select refactoring operation (menu)
-
-## Markdown
-<!-- Markdown preview disabled - requires yarn
-- `<leader>mp` - Toggle markdown preview in browser
--->
-
 ## Plugin Commands
-- `:Lazy` - Open lazy.nvim plugin manager
+- `:lua vim.pack.update()` - Update all plugins (vim.pack built-in manager)
+- `:checkhealth vim.pack` - Check vim.pack plugin health
 - `:Mason` - Open Mason LSP/tool installer
 - `:Telescope` - Open Telescope picker
 
