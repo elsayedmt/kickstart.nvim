@@ -9,14 +9,15 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 ## Key Architecture
 
 ### Configuration Structure
-- **Main entry point**: `init.lua` - Contains the core configuration with lazy.nvim plugin management
+- **Main entry point**: `init.lua` - Contains the core configuration with vim.pack plugin management
 - **Custom modules**: `lua/haroona/` - Personal configuration modules
 - **Custom plugins**: `lua/custom/plugins/` - Additional plugin configurations beyond kickstart defaults
 - **Kickstart plugins**: `lua/kickstart/plugins/` - Standard kickstart plugin configurations
 
 ### Plugin Management
-- Uses [lazy.nvim](https://github.com/folke/lazy.nvim) as the plugin manager
-- Plugins are configured in modular files under `lua/custom/plugins/`
+- Uses `vim.pack` (Neovim 0.12's built-in plugin manager) — no lockfile
+- Plugins are added via `vim.pack.add { { src = 'https://github.com/owner/repo' } }` followed by `require('x').setup{}`
+- Files in `lua/custom/plugins/*.lua` are auto-`require`d by a directory loader in `lua/custom/plugins/init.lua`; they call `vim.pack.add` directly and do NOT return lazy spec tables
 - Core plugins from kickstart are maintained in `lua/kickstart/plugins/`
 
 ### Key Custom Configurations
@@ -41,8 +42,8 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 ## Common Commands
 
 ### Plugin Management
-- `:Lazy` - Open lazy.nvim plugin manager interface
-- `:Lazy update` - Update all plugins
+- `:lua vim.pack.update()` - Update all plugins (vim.pack built-in manager)
+- `:checkhealth vim.pack` - Check vim.pack plugin health
 - `:Mason` - Open Mason LSP/tool installer interface
 
 ### Code Formatting
@@ -53,8 +54,8 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 ### Development Workflow
 - LSP features available for supported languages (see servers configuration in init.lua)
 - Auto-completion via blink.cmp
-- Git integration through multiple plugins (gitsigns, neogit, fugitive, snacks git features)
-- File exploration via Neo-tree and Snacks explorer
+- Git integration through multiple plugins (gitsigns, neogit, snacks git features)
+- File exploration via oil.nvim (`-`) and Snacks explorer (`<leader>e`)
 
 ### Testing and Linting
 - Stylua formatting enforced via GitHub workflow
@@ -66,15 +67,11 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 ### Plugin Structure
 Custom plugins follow this pattern in `lua/custom/plugins/*.lua`:
 ```lua
-return {
-  'plugin-name',
-  config = function()
-    -- plugin setup
-  end,
-  dependencies = { ... },
-  opts = { ... }
-}
+-- lua/custom/plugins/example.lua
+vim.pack.add { { src = 'https://github.com/owner/example.nvim' } }
+require('example').setup { ... }
 ```
+Files here are auto-`require`d by the directory loader in `lua/custom/plugins/init.lua`.
 
 ### Keymap Organization
 - Uses which-key.nvim for discoverable keybindings
