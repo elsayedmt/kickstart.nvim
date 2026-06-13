@@ -495,10 +495,12 @@ git commit -m "feat(neogit): convert to vim.pack"
 
 ---
 
-## Task 7: Convert `refactoring.lua` (eager)
+## Task 7: ~~Convert `refactoring.lua`~~ — SUPERSEDED: refactoring.nvim removed
+
+> **Decision (during execution):** refactoring.nvim's latest version requires `lewis6991/async.nvim`, which collides with nvim-ufo's `promise-async` over the global `require('async')` module name (table vs callable — they cannot coexist on the runtimepath). Since refactoring's keymap API and the async.nvim dependency arrived in the same breaking commit, keeping the keymaps forces the conflict. User chose to **drop refactoring.nvim** (and async.nvim) and keep ufo. `lua/custom/plugins/refactoring.lua` was removed; the `<leader>x*` keymaps are gone. The block below is retained for history only — do not implement it.
 
 **Files:**
-- Modify: `lua/custom/plugins/refactoring.lua` (replace entire contents)
+- ~~Modify: `lua/custom/plugins/refactoring.lua`~~ (removed instead)
 
 - [ ] **Step 1: Replace the file**
 
@@ -506,8 +508,10 @@ plenary + treesitter are present (treesitter added eagerly in init.lua). Keep th
 
 ```lua
 -- refactoring.nvim: extract/inline/debug refactorings
+-- NOTE: refactoring.nvim now requires lewis6991/async.nvim at runtime (added upstream 2026).
 vim.pack.add {
   { src = 'https://github.com/nvim-lua/plenary.nvim' },
+  { src = 'https://github.com/lewis6991/async.nvim' },
   { src = 'https://github.com/ThePrimeagen/refactoring.nvim' },
 }
 
@@ -845,11 +849,22 @@ vim.cmd [[autocmd BufRead,BufNewFile .terraformrc,terraform.rc set filetype=hcl]
 vim.cmd [[autocmd BufRead,BufNewFile *.tf,*.tfvars set filetype=terraform]]
 vim.cmd [[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json]]
 
--- Per-plugin files in this directory are auto-required by the loader.
 -- crates.nvim and rustaceanvim are loaded lazily from after/ftplugin/{toml,rust}.lua.
+
+-- Iterate over all Lua files in this directory and load them (upstream loader).
+-- CRITICAL: this loop is what `require`s each per-plugin file (snacks.lua, etc.).
+-- It MUST be preserved — restoring this file from master clobbered it, which is why
+-- it is re-added here.
+local plugins_dir = vim.fs.joinpath(vim.fn.stdpath 'config', 'lua', 'custom', 'plugins')
+for file_name, type in vim.fs.dir(plugins_dir, { follow = true }) do
+  if (type == 'file' or type == 'link') and file_name:match '%.lua$' and file_name ~= 'init.lua' then
+    local module = file_name:gsub('%.lua$', '')
+    require('custom.plugins.' .. module)
+  end
+end
 ```
 
-Note: the upstream loader (`require('custom.plugins.' .. module)` per file) requires this `init.lua` separately via the `require 'custom.plugins'` in the main init.lua — so it runs as a normal module (no return value needed).
+Note: this `init.lua` is required via `require 'custom.plugins'` in the main init.lua; the loop above then requires every other `*.lua` in the directory. **Both** the terraform autocmds and the loop must be present — the loop was lost when Task 1 restored this file from master (which had the old lazy-import version), so it is restored here.
 
 - [ ] **Step 2: Verify**
 
