@@ -3,7 +3,28 @@ vim.pack.add { { src = 'https://github.com/folke/snacks.nvim' } }
 
 require('snacks').setup {
   bigfile = { enabled = true },
-  dashboard = { enabled = true },
+  dashboard = {
+    enabled = true,
+    -- Default preset includes a `startup` section that hard-requires `lazy.stats`,
+    -- which errors on UIEnter now that we're on vim.pack. Replace it with a
+    -- lazy-free plugin-count line (pcall-guarded so the dashboard can't crash).
+    sections = {
+      { section = 'header' },
+      { section = 'keys', gap = 1, padding = 1 },
+      function()
+        local ok, plugins = pcall(vim.pack.get)
+        local n = ok and #plugins or 0
+        return {
+          align = 'center',
+          padding = 1,
+          text = {
+            { '⚡ ', hl = 'special' },
+            { n .. ' plugins', hl = 'footer' },
+          },
+        }
+      end,
+    },
+  },
   explorer = { enabled = true },
   indent = { enabled = true },
   input = { enabled = true },
