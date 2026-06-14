@@ -43,8 +43,6 @@ The plugin is implemented entirely in Lua, leveraging Neovim's built-in diff lib
 
 ### Basic Installation
 
-Using lazy.nvim (as configured in this setup):
-
 ```lua
 {
   'lewis6991/gitsigns.nvim',

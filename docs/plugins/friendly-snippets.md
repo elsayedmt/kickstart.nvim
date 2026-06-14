@@ -81,42 +81,6 @@ friendly-snippets is a community-driven repository containing hundreds of VSCode
 
 ### Installation
 
-#### Using lazy.nvim with LuaSnip
-
-```lua
-{
-  'L3MON4D3/LuaSnip',
-  dependencies = {
-    'rafamadriz/friendly-snippets',
-    config = function()
-      require('luasnip.loaders.from_vscode').lazy_load()
-    end,
-  },
-}
-```
-
-#### Using lazy.nvim with blink.cmp
-
-```lua
-{
-  'saghen/blink.cmp',
-  dependencies = {
-    {
-      'L3MON4D3/LuaSnip',
-      dependencies = {
-        'rafamadriz/friendly-snippets',
-        config = function()
-          require('luasnip.loaders.from_vscode').lazy_load()
-        end,
-      },
-    },
-  },
-  opts = {
-    snippets = { preset = 'luasnip' },
-  },
-}
-```
-
 #### Using packer.nvim
 
 ```lua
@@ -139,13 +103,11 @@ require('luasnip.loaders.from_vscode').lazy_load()
 
 -- Load specific languages only
 require('luasnip.loaders.from_vscode').lazy_load({
-  paths = { vim.fn.stdpath('data') .. '/lazy/friendly-snippets' },
   include = { 'python', 'javascript', 'typescript', 'rust' },
 })
 
 -- Exclude certain languages
 require('luasnip.loaders.from_vscode').lazy_load({
-  paths = { vim.fn.stdpath('data') .. '/lazy/friendly-snippets' },
   exclude = { 'tex', 'latex' },
 })
 ```
@@ -156,7 +118,6 @@ require('luasnip.loaders.from_vscode').lazy_load({
 require('luasnip.loaders.from_vscode').lazy_load({
   paths = {
     vim.fn.stdpath('config') .. '/snippets',  -- Your custom snippets
-    vim.fn.stdpath('data') .. '/lazy/friendly-snippets',  -- friendly-snippets
   },
 })
 ```
@@ -299,11 +260,11 @@ import  from '';
 
 **Method 2: Browse snippet files**
 ```bash
-# View available snippets for a language
-cat ~/.local/share/nvim/lazy/friendly-snippets/snippets/javascript.json
+# View available snippets for a language (adjust path to your plugin manager's install directory)
+cat <path-to-friendly-snippets>/snippets/javascript.json
 
 # List all available snippet files
-ls ~/.local/share/nvim/lazy/friendly-snippets/snippets/
+ls <path-to-friendly-snippets>/snippets/
 ```
 
 **Method 3: LuaSnip commands**
@@ -472,11 +433,6 @@ require('luasnip.loaders.from_vscode').lazy_load({
 **Check if snippets are loaded:**
 ```lua
 :lua print(vim.inspect(require('luasnip').available()))
-```
-
-**Verify friendly-snippets is installed:**
-```vim
-:Lazy
 ```
 
 **Check loader was called:**

@@ -28,7 +28,6 @@ Telescope.nvim is a highly extendable fuzzy finder over lists built entirely in 
 ### Basic Installation
 
 ```lua
--- Using lazy.nvim
 {
   'nvim-telescope/telescope.nvim',
   tag = '0.1.8', -- Use latest stable version

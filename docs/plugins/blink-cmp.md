@@ -42,22 +42,6 @@ blink.cmp is a modern completion engine designed for speed and simplicity. It pr
 
 ### Installation
 
-#### Using lazy.nvim
-```lua
-{
-  'saghen/blink.cmp',
-  event = 'VimEnter',
-  version = '1.*',  -- Use latest stable version
-  dependencies = {
-    'L3MON4D3/LuaSnip',  -- Optional: for snippet support
-    'rafamadriz/friendly-snippets',  -- Optional: pre-made snippets
-  },
-  opts = {
-    -- Configuration goes here
-  },
-}
-```
-
 ### Basic Configuration
 
 ```lua
@@ -177,12 +161,9 @@ sources = {
 
 ```lua
 sources = {
-  default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
+  default = { 'lsp', 'path', 'snippets', 'buffer' },
   providers = {
-    lazydev = {
-      module = 'lazydev.integrations.blink',
-      score_offset = 100,  -- Prioritize Neovim API completions
-    },
+    -- Add custom providers here
   },
 }
 ```
@@ -399,7 +380,6 @@ require('blink.cmp').scroll_documentation_down(4)
   dependencies = {
     'L3MON4D3/LuaSnip',
     'rafamadriz/friendly-snippets',
-    'folke/lazydev.nvim',
   },
   opts = {
     keymap = { preset = 'default' },
@@ -412,13 +392,7 @@ require('blink.cmp').scroll_documentation_down(4)
       ghost_text = { enabled = true },
     },
     sources = {
-      default = { 'lsp', 'path', 'snippets', 'lazydev' },
-      providers = {
-        lazydev = {
-          module = 'lazydev.integrations.blink',
-          score_offset = 100,
-        },
-      },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
     },
     fuzzy = { implementation = 'prefer_rust_with_warning' },
     snippets = { preset = 'luasnip' },
@@ -462,16 +436,11 @@ fuzzy = { implementation = 'lua' }
 
 **Build from source (requires nightly Rust):**
 ```bash
-cd ~/.local/share/nvim/lazy/blink.cmp
+cd <path-to-blink.cmp>
 cargo build --release
 ```
 
 #### 3. Snippets Not Expanding
-
-**Verify snippet engine is installed:**
-```vim
-:Lazy
-```
 
 **Check snippet configuration:**
 ```lua
@@ -525,7 +494,6 @@ fuzzy = { implementation = 'rust' }
 ### Complementary Plugins
 - **LuaSnip**: Snippet engine with advanced features
 - **friendly-snippets**: Collection of pre-made snippets
-- **lazydev.nvim**: Neovim API completions
 - **mason.nvim**: LSP server management
 - **nvim-lspconfig**: LSP configuration
 
