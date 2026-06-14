@@ -41,28 +41,6 @@ conform.nvim is designed to be a modern replacement for null-ls formatting capab
 
 ### Installation
 
-#### Using lazy.nvim
-```lua
-{
-  'stevearc/conform.nvim',
-  event = { 'BufWritePre' },
-  cmd = { 'ConformInfo' },
-  keys = {
-    {
-      '<leader>f',
-      function()
-        require('conform').format({ async = true, lsp_format = 'fallback' })
-      end,
-      mode = '',
-      desc = 'Format buffer',
-    },
-  },
-  opts = {
-    -- Configuration goes here
-  },
-}
-```
-
 #### Using packer.nvim
 ```lua
 use({

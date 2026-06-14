@@ -49,18 +49,6 @@ With Neovim 0.11+, nvim-lspconfig has evolved to work with built-in functions:
 - Neovim 0.11.3+ (support for 0.10 will be removed)
 - Language servers must be installed separately
 
-### Installation with lazy.nvim
-```lua
-{
-  'neovim/nvim-lspconfig',
-  dependencies = {
-    'mason-org/mason.nvim',           -- LSP server installer
-    'mason-org/mason-lspconfig.nvim', -- Bridge between Mason and lspconfig
-    'saghen/blink.cmp',               -- Completion engine
-  },
-}
-```
-
 ### Basic Configuration (Neovim 0.11+)
 ```lua
 -- Enable language servers
@@ -454,16 +442,7 @@ require('config.lsp.keymaps')
 require('config.lsp.diagnostics')
 ```
 
-### 2. Performance Optimization
-```lua
--- Lazy load based on filetype
-{
-  'neovim/nvim-lspconfig',
-  ft = { 'lua', 'python', 'rust', 'javascript', 'typescript' },
-}
-```
-
-### 3. Conditional Setup
+### 2. Conditional Setup
 ```lua
 -- Only enable if server is available
 if vim.fn.executable('rust-analyzer') == 1 then
@@ -471,7 +450,7 @@ if vim.fn.executable('rust-analyzer') == 1 then
 end
 ```
 
-### 4. Project-Specific Configuration
+### 3. Project-Specific Configuration
 ```lua
 -- Use .nvim.lua for project-specific LSP settings
 -- In project root: .nvim.lua

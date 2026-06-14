@@ -45,27 +45,6 @@
 
 ## Installation
 
-### Using lazy.nvim
-
-```lua
-{
-  "folke/which-key.nvim",
-  event = "VeryLazy",
-  opts = {
-    -- Configuration options go here
-  },
-  keys = {
-    {
-      "<leader>?",
-      function()
-        require("which-key").show({ global = false })
-      end,
-      desc = "Buffer Local Keymaps (which-key)",
-    },
-  },
-}
-```
-
 ### Using packer.nvim
 
 ```lua
@@ -471,10 +450,9 @@ wk.register({
 
 ### Complementary Plugins
 
-1. **[folke/lazy.nvim](https://github.com/folke/lazy.nvim)** - Modern plugin manager (same author)
-2. **[nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)** - Fuzzy finder (works great with which-key)
-3. **[lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)** - Git integration
-4. **[hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)** - Completion engine
+1. **[nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)** - Fuzzy finder (works great with which-key)
+2. **[lewis6991/gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)** - Git integration
+3. **[hrsh7th/nvim-cmp](https://github.com/hrsh7th/nvim-cmp)** - Completion engine
 
 ### Alternatives
 

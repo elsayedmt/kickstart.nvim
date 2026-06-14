@@ -35,44 +35,6 @@ LuaSnip serves as a sophisticated text expansion system that goes far beyond sim
 - Neovim >= 0.7
 - Optional: `jsregexp` for advanced regex transformations (recommended)
 
-### Installation with Lazy.nvim
-
-```lua
-{
-  'L3MON4D3/LuaSnip',
-  version = '2.*',
-  build = (function()
-    -- Build Step is needed for regex support in snippets
-    -- This step is not supported in many Windows environments
-    -- Remove the below condition to re-enable on Windows
-    if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-      return
-    end
-    return 'make install_jsregexp'
-  end)(),
-  dependencies = {
-    -- Optional: Pre-made snippets from friendly-snippets
-    {
-      'rafamadriz/friendly-snippets',
-      config = function()
-        require('luasnip.loaders.from_vscode').lazy_load()
-      end,
-    },
-  },
-  config = function()
-    local ls = require('luasnip')
-
-    -- Enable autotrigger snippets
-    ls.config.set_config({
-      -- Enable autotriggered snippets
-      enable_autosnippets = true,
-      -- Use Tab (or some other key if you prefer) to trigger visual selection
-      store_selection_keys = "<Tab>",
-    })
-  end,
-}
-```
-
 ### Installation with Packer
 
 ```lua
