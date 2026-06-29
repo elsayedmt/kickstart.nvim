@@ -24,18 +24,14 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- Buffer-local toggle keymap for markdown files.
+-- NOTE: <leader>m is Harpoon's "Mark" group; we use <leader>mv ("markdown view")
+-- to avoid clobbering its global maps (e.g. <leader>mp = Harpoon previous file).
 vim.api.nvim_create_autocmd('FileType', {
   pattern = { 'markdown', 'markdown.mdx' },
   callback = function(ev)
-    vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreviewToggle<cr>', {
+    vim.keymap.set('n', '<leader>mv', '<cmd>MarkdownPreviewToggle<cr>', {
       buffer = ev.buf,
       desc = 'Markdown Preview (toggle)',
     })
   end,
 })
-
--- Register the <leader>m group label with which-key if present.
-local ok, wk = pcall(require, 'which-key')
-if ok then
-  wk.add { { '<leader>m', group = 'Markdown' } }
-end
