@@ -91,6 +91,10 @@ Quick reference for useful Neovim keybindings in this configuration.
 - `<leader>Sr` - Replace selection (visual mode)
 - `<leader>Sf` - Replace in current file
 
+## Markdown Preview
+- `<leader>mv` - Toggle browser preview (renders mermaid diagrams & math); markdown buffers only
+- `:MarkdownPreview` / `:MarkdownPreviewStop` - Open / stop the preview explicitly
+
 ## Plugin Commands
 - `:lua vim.pack.update()` - Update all plugins (vim.pack built-in manager)
 - `:checkhealth vim.pack` - Check vim.pack plugin health
