@@ -45,4 +45,6 @@ map('n', '<leader>rmu', function() vim.cmd.RustLsp { 'moveItem', 'up' } end, '[R
 map('n', '<leader>rmd', function() vim.cmd.RustLsp { 'moveItem', 'down' } end, '[R]ust [M]ove item [D]own')
 
 -- Rebuild proc macros
-map('n', '<leader>rm', function() vim.cmd.RustLsp 'rebuildProcMacros' end, '[R]ust rebuild proc [M]acros')
+-- <leader>rM, not <leader>rm: the latter is a prefix of <leader>rmu/<leader>rmd
+-- above, so it would stall for 'timeoutlen' (300ms) on every press.
+map('n', '<leader>rM', function() vim.cmd.RustLsp 'rebuildProcMacros' end, '[R]ust rebuild proc [M]acros')

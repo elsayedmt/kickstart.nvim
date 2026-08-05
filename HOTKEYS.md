@@ -86,10 +86,10 @@ Quick reference for useful Neovim keybindings in this configuration.
 - `<leader>mc` - Clear all Harpoon marks
 
 ## Search and Replace (Spectre)
-- `<leader>rr` - Toggle Spectre (project-wide search/replace)
-- `<leader>rw` - Replace current word
-- `<leader>rr` - Replace selection (visual mode)
-- `<leader>rf` - Replace in current file
+- `<leader>Rr` - Toggle Spectre (project-wide search/replace)
+- `<leader>Rw` - Replace current word
+- `<leader>Rr` - Replace selection (visual mode)
+- `<leader>Rf` - Replace in current file
 
 ## Debug (nvim-dap)
 - `<F5>` - Start / continue
