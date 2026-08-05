@@ -12,14 +12,7 @@ vim.api.nvim_create_autocmd('User', {
   pattern = 'PackChanged',
   callback = function(ev)
     local d = ev.data
-    if
-      d
-      and d.spec
-      and d.spec.name == 'markdown-preview.nvim'
-      and (d.kind == 'install' or d.kind == 'update')
-    then
-      vim.fn['mkdp#util#install']()
-    end
+    if d and d.spec and d.spec.name == 'markdown-preview.nvim' and (d.kind == 'install' or d.kind == 'update') then vim.fn['mkdp#util#install']() end
   end,
 })
 

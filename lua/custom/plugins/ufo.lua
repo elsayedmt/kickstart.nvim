@@ -12,17 +12,13 @@ vim.api.nvim_create_autocmd('BufReadPost', {
       { src = 'https://github.com/kevinhwang91/nvim-ufo' },
     }
     require('ufo').setup {
-      provider_selector = function()
-        return { 'treesitter', 'indent' }
-      end,
+      provider_selector = function() return { 'treesitter', 'indent' } end,
     }
     vim.keymap.set('n', 'zR', require('ufo').openAllFolds, { desc = 'Open all folds' })
     vim.keymap.set('n', 'zM', require('ufo').closeAllFolds, { desc = 'Close all folds' })
     vim.keymap.set('n', 'zK', function()
       local winid = require('ufo').peekFoldedLinesUnderCursor()
-      if not winid then
-        vim.lsp.buf.hover()
-      end
+      if not winid then vim.lsp.buf.hover() end
     end, { desc = 'Peek fold or show hover' })
   end,
 })
