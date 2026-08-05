@@ -8,12 +8,26 @@ require('snacks').setup {
     -- Default preset includes a `startup` section that hard-requires `lazy.stats`,
     -- which errors on UIEnter now that we're on vim.pack. Replace it with a
     -- lazy-free plugin-count line (pcall-guarded so the dashboard can't crash).
+    --
+    -- Counts package directories on disk rather than calling vim.pack.get():
+    -- that shells out to git once per plugin and takes ~2.3s for 43 plugins,
+    -- with no caching. It runs in the dashboard render path, so it blocked
+    -- UIEnter on every single startup. Reading the directory is ~0.15ms and
+    -- yields the same number.
     sections = {
       { section = 'header' },
       { section = 'keys', gap = 1, padding = 1 },
       function()
-        local ok, plugins = pcall(vim.pack.get)
-        local n = ok and #plugins or 0
+        local ok, n = pcall(function()
+          local count = 0
+          for _, base in ipairs(vim.fn.globpath(vim.fn.stdpath 'data', 'site/pack/*/opt', false, true)) do
+            for _, ty in vim.fs.dir(base) do
+              if ty == 'directory' or ty == 'link' then count = count + 1 end
+            end
+          end
+          return count
+        end)
+        n = ok and n or 0
         return {
           align = 'center',
           padding = 1,
