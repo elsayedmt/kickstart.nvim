@@ -23,22 +23,25 @@ local function ensure()
   end
 end
 
-vim.keymap.set('n', '<leader>SS', function()
+-- Mapped under <leader>r ([R]eplace) rather than <leader>S: <leader>S is the
+-- Snacks scratch-buffer picker, and any <leader>S* map here would stall that
+-- bare <leader>S for 'timeoutlen' (300ms) on every press.
+vim.keymap.set('n', '<leader>rr', function()
   ensure()
   require('spectre').toggle()
-end, { desc = 'Toggle [S]pectre (search/replace)' })
+end, { desc = 'Toggle Spect[r]e (search/[r]eplace)' })
 
-vim.keymap.set('n', '<leader>Sw', function()
+vim.keymap.set('n', '<leader>rw', function()
   ensure()
   require('spectre').open_visual { select_word = true }
-end, { desc = '[S]pectre: Replace current [W]ord' })
+end, { desc = '[R]eplace current [W]ord' })
 
-vim.keymap.set('v', '<leader>Sr', function()
+vim.keymap.set('v', '<leader>rr', function()
   ensure()
   require('spectre').open_visual()
-end, { desc = '[S]pectre: [R]eplace selection' })
+end, { desc = '[R]eplace selection' })
 
-vim.keymap.set('n', '<leader>Sf', function()
+vim.keymap.set('n', '<leader>rf', function()
   ensure()
   require('spectre').open_file_search { select_word = true }
-end, { desc = '[S]pectre: Replace in current [F]ile' })
+end, { desc = '[R]eplace in current [F]ile' })
