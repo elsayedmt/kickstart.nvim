@@ -115,6 +115,8 @@ do
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
 
+  vim.cmd.colorscheme = 'wildcharm'
+
   -- Don't show the mode, since it's already in the status line
   vim.o.showmode = false
 
@@ -396,7 +398,8 @@ do
   -- Load the colorscheme here.
   -- tokyonight stays installed as a fallback; catppuccin-mocha is the active theme.
   vim.pack.add { gh 'catppuccin/nvim' }
-  vim.cmd.colorscheme 'catppuccin-mocha'
+  -- vim.cmd.colorscheme = 'randomhue' # 'catppuccin-mocha'
+  vim.cmd.colorscheme = 'tokyonight-night'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
