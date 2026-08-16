@@ -31,3 +31,19 @@ vim.keymap.set('n', '<leader>ou', function() require('opencode').command 'sessio
 vim.keymap.set('n', '<leader>od', function() require('opencode').command 'session.half.page.down' end, { desc = '[O]pencode half page [D]own' }) 
 vim.keymap.set({ 'n', 't' }, '<leader>oo', function() require('snacks.terminal').toggle(opencode_cmd, snacks_terminal_opts) end, { desc = '[O]pencode Toggle' })
 vim.keymap.set({ 'n', 't' }, '<C-.>', function() require('snacks.terminal').toggle(opencode_cmd, snacks_terminal_opts) end, { desc = 'Toggle OpenCode' })
+
+
+-- Optionally show upon submitting prompt
+vim.api.nvim_create_autocmd('User', {
+  pattern = { 'OpencodeEvent:tui.command.execute' },
+  callback = function(args)
+    ---@type opencode.server.Event
+    local event = args.data.event
+    if event.properties.command == 'prompt.submit' then
+      local win = require('snacks.terminal').get(opencode_cmd, { create = false })
+      if win then
+        win:show()
+      end
+    end
+  end,
+})
