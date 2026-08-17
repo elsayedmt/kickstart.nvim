@@ -129,8 +129,8 @@ vim.keymap.set('n', '<leader>S', function() Snacks.scratch.select() end, { desc 
 vim.keymap.set('n', '<leader>un', function() Snacks.notifier.hide() end, { desc = 'Dismiss All Notifications' })
 
 -- Terminal
-vim.keymap.set('n', '<c-/>', function() Snacks.terminal() end, { desc = 'Toggle Terminal' })
-vim.keymap.set('n', '<c-_>', function() Snacks.terminal() end, { desc = 'which_key_ignore' })
+vim.keymap.set({ 'n', 't' }, '<c-/>', function() Snacks.terminal() end, { desc = 'Toggle Terminal' })
+vim.keymap.set({ 'n', 't' }, '<c-_>', function() Snacks.terminal() end, { desc = 'which_key_ignore' })
 
 -- Word navigation
 vim.keymap.set({ 'n', 't' }, ']]', function() Snacks.words.jump(vim.v.count1) end, { desc = 'Next Reference' })

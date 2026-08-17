@@ -4,4 +4,12 @@ vim.pack.add {
   { src = 'https://github.com/sindrets/diffview.nvim' },
   { src = 'https://github.com/NeogitOrg/neogit' },
 }
-require('neogit').setup {}
+
+local neogit = require 'neogit'
+neogit.setup {}
+
+vim.keymap.set('n', '<leader>gn', function()
+  neogit.open {
+    kind = 'split',
+  }
+end, { desc = 'Open Neogit UI' })
