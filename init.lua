@@ -120,6 +120,9 @@ do
   -- Don't show the mode, since it's already in the status line
   vim.o.showmode = false
 
+  -- Reserve two lines so long diagnostic messages don't push the layout up
+  vim.o.cmdheight = 2
+
   -- Sync clipboard between OS and Neovim.
   --  Schedule the setting after `UiEnter` because it can increase startup-time.
   --  Remove this option if you want your OS clipboard to remain independent.
