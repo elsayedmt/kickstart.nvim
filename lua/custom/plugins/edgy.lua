@@ -31,7 +31,6 @@ require('edgy').setup {
       title = 'Git Changes',
       size = { height = 0.4 },
       pinned = true,
-      collapsed = true,
       open = function() require('neogit').open { kind = 'vsplit' } end,
     },
   },
@@ -56,11 +55,13 @@ local function expand_view(ft)
   for _, edgebar in pairs(require('edgy.config').layout) do
     for _, view in ipairs(edgebar.views) do
       if view.ft == ft then
-        if view.wins[1] then
-          view.wins[1]:focus()
-        else
-          view:open_pinned()
+        for _, win in ipairs(view.wins) do
+          if win:is_valid() and not win:is_pinned() then
+            win:focus()
+            return
+          end
         end
+        view:open_pinned()
         return
       end
     end
