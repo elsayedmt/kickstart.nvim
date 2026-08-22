@@ -97,6 +97,10 @@ do
   --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
   vim.g.mapleader = ' '
   vim.g.maplocalleader = ' '
+  vim.opt.expandtab = true
+  vim.opt.tabstop = 4
+  -- Set to true if you have a Nerd Font installed and selected in the terminal
+  vim.g.have_nerd_font = true
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = false
@@ -115,7 +119,7 @@ do
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
 
-  vim.cmd.colorscheme = 'wildcharm'
+  vim.cmd.colorscheme = 'default'
 
   -- Don't show the mode, since it's already in the status line
   vim.o.showmode = false
@@ -402,7 +406,7 @@ do
   -- tokyonight stays installed as a fallback; catppuccin-mocha is the active theme.
   vim.pack.add { gh 'catppuccin/nvim' }
   -- vim.cmd.colorscheme = 'randomhue' # 'catppuccin-mocha'
-  vim.cmd.colorscheme = 'tokyonight-night'
+  vim.cmd.colorscheme = 'randomhue'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
