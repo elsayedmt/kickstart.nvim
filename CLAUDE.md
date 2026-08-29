@@ -23,8 +23,8 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 ### Key Custom Configurations
 
 #### Theme and UI
-- Primary colorscheme: TokyoNight (configured in init.lua)
-- Alternative theme available: Kanagawa (disabled in custom/plugins/kanagawa.lua)
+- Primary colorscheme: catppuccin-mocha (set via `vim.cmd.colorscheme` in init.lua)
+- TokyoNight stays installed as a fallback; `<leader>psc` opens the Snacks colorscheme picker
 - Snacks.nvim provides comprehensive UI enhancements including dashboard, explorer, notifications
 
 #### Language Support
@@ -47,8 +47,8 @@ This is a personalized Neovim configuration based on kickstart.nvim, a minimal s
 - `:Mason` - Open Mason LSP/tool installer interface
 
 ### Code Formatting
-- `stylua` is configured for Lua code formatting
-- Format on save is enabled for most file types (disabled for C/C++)
+- `stylua` formats Lua, wired through conform.nvim (`formatters_by_ft`) and installed by mason-tool-installer
+- Format on save is opt-in per filetype via the `enabled_filetypes` table in conform's `format_on_save`; only `lua` is enabled today
 - Manual formatting: `<leader>f`
 
 ### Development Workflow

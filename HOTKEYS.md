@@ -102,6 +102,18 @@ Quick reference for useful Neovim keybindings in this configuration.
 - `<leader>mv` - Toggle browser preview (renders mermaid diagrams & math); markdown buffers only
 - `:MarkdownPreview` / `:MarkdownPreviewStop` - Open / stop the preview explicitly
 
+## Task Runner (overseer.nvim)
+- `<leader>xx` - Run the current file (bun / python3 / go run / bash; `cargo run` for Rust, `:source` for Lua)
+- `<leader>xw` - Run current file and re-run it on every save (output in a vsplit)
+- `<leader>xr` - Pick a task to run (auto-discovers package.json scripts, Makefile, cargo, just, mise, .vscode/tasks.json)
+- `<leader>xt` - Toggle the task list
+- `<leader>xo` - Open the task list
+- `<leader>xa` - Run an action on a task (restart, stop, watch, open output, dispose)
+- `<leader>xs` - Run an arbitrary shell command as a task
+- `<leader>xl` - Restart the most recent task
+
+In the task list: `<CR>` action menu, `o` open output, `dd` dispose, `p` preview, `?` help.
+
 ## Plugin Commands
 - `:lua vim.pack.update()` - Update all plugins (vim.pack built-in manager)
 - `:checkhealth vim.pack` - Check vim.pack plugin health
