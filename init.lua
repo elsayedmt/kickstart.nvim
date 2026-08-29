@@ -102,9 +102,6 @@ do
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = true
 
-  -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
-
   -- [[ Setting options ]]
   --  See `:help vim.o`
   -- NOTE: You can change these options as you wish!
@@ -118,8 +115,6 @@ do
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
-
-  vim.cmd.colorscheme = 'default'
 
   -- Don't show the mode, since it's already in the status line
   vim.o.showmode = false
@@ -384,6 +379,7 @@ do
       { '<leader>d', group = '[D]ebug' },
       { '<leader>R', group = '[R]eplace (Spectre)', mode = { 'n', 'v' } },
       { '<leader>b', group = '[B]uffer' },
+      { '<leader>x', group = 'E[X]ecute (Tasks)' },
       { 'gr', group = 'LSP Actions', mode = { 'n' } },
     },
   }
@@ -405,8 +401,8 @@ do
   -- Load the colorscheme here.
   -- tokyonight stays installed as a fallback; catppuccin-mocha is the active theme.
   vim.pack.add { gh 'catppuccin/nvim' }
-  -- vim.cmd.colorscheme = 'randomhue' # 'catppuccin-mocha'
-  vim.cmd.colorscheme = 'randomhue'
+  -- vim.cmd.colorscheme 'randomhue'
+  vim.cmd.colorscheme 'catppuccin-mocha'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -705,19 +701,24 @@ do
   --  See `:help lsp-config` for information about keys and how to configure
   ---@type table<string, vim.lsp.Config>
   local servers = {
-    -- clangd = {},
+    clangd = {
+      cmd = {
+        'clangd',
+        '--background-index',
+        '--clang-tidy',
+        '--completion-style=detailed',
+        '--header-insertion=never',
+        '--offset-encoding=utf-16',
+      },
+    },
     -- gopls = {},
     -- pyright = {},
     -- rust_analyzer = {},
     terraformls = {},
     --
-    -- Some languages (like typescript) have entire language plugins that can be useful:
-    --    https://github.com/pmizio/typescript-tools.nvim
-    --
-    -- But for many setups, the LSP (`ts_ls`) will work just fine
-    -- ts_ls = {},
-
-    stylua = {}, -- Used to format Lua code
+    -- TypeScript: ts_ls is the TS 5 fallback. lua/custom/plugins/typescript.lua
+    -- prefers tsgo (TS 7) when a project has it and gates ts_ls off in that case.
+    ts_ls = {},
 
     -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
@@ -776,7 +777,10 @@ do
   -- You can press `g?` for help in this menu.
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
-    -- You can add other tools here that you want Mason to install
+    -- Tools that are not language servers (formatters, linters) go here
+    'stylua', -- Used to format Lua code
+    'markdownlint', -- Used by nvim-lint for markdown
+    'clang-format', -- Used to format C/C++ code
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -799,7 +803,7 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        -- lua = true,
+        lua = true,
         -- python = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
@@ -813,6 +817,9 @@ do
     },
     -- You can also specify external formatters in here.
     formatters_by_ft = {
+      lua = { 'stylua' },
+      c = { 'clang-format' },
+      cpp = { 'clang-format' },
       -- rust = { 'rustfmt' },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
@@ -921,7 +928,7 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
