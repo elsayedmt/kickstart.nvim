@@ -104,7 +104,6 @@ vim.keymap.set('n', '<leader>psk', function() Snacks.picker.keymaps() end, { des
 vim.keymap.set('n', '<leader>psl', function() Snacks.picker.loclist() end, { desc = '[P]icker [S]earch [L]ocation List' })
 vim.keymap.set('n', '<leader>psm', function() Snacks.picker.marks() end, { desc = '[P]icker [S]earch [M]arks' })
 vim.keymap.set('n', '<leader>psM', function() Snacks.picker.man() end, { desc = '[P]icker [S]earch [M]an Pages' })
-vim.keymap.set('n', '<leader>psp', function() Snacks.picker.lazy() end, { desc = '[P]icker [S]earch [P]lugin Spec' })
 vim.keymap.set('n', '<leader>psq', function() Snacks.picker.qflist() end, { desc = '[P]icker [S]earch [Q]uickfix List' })
 vim.keymap.set('n', '<leader>psR', function() Snacks.picker.resume() end, { desc = '[P]icker [S]earch [R]esume' })
 vim.keymap.set('n', '<leader>psu', function() Snacks.picker.undo() end, { desc = '[P]icker [S]earch [U]ndo History' })
@@ -133,8 +132,8 @@ vim.keymap.set({ 'n', 't' }, '<c-/>', function() Snacks.terminal() end, { desc =
 vim.keymap.set({ 'n', 't' }, '<c-_>', function() Snacks.terminal() end, { desc = 'which_key_ignore' })
 
 -- Word navigation
-vim.keymap.set({ 'n', 't' }, ']]', function() Snacks.words.jump(vim.v.count1) end, { desc = 'Next Reference' })
-vim.keymap.set({ 'n', 't' }, '[[', function() Snacks.words.jump(-vim.v.count1) end, { desc = 'Prev Reference' })
+vim.keymap.set('n', ']]', function() Snacks.words.jump(vim.v.count1) end, { desc = 'Next Reference' })
+vim.keymap.set('n', '[[', function() Snacks.words.jump(-vim.v.count1) end, { desc = 'Prev Reference' })
 
 -- Debug globals + toggle mappings (ran inline; Snacks is loaded eagerly above)
 _G.dd = function(...) Snacks.debug.inspect(...) end

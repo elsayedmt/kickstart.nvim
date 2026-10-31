@@ -35,13 +35,13 @@ Quick reference for useful Neovim keybindings in this configuration.
 - `<leader><leader>` - Find existing buffers
 
 ## LSP (Language Server) Keybindings
-- `grn` - Rename symbol under cursor
-- `gra` - Code action (fix/refactor)
-- `grr` - Go to references
-- `gri` - Go to implementation
-- `grd` - Go to definition
-- `grD` - Go to declaration
-- `grt` - Go to type definition
+- `gd` - Go to definition
+- `gD` - Go to declaration
+- `gr` - Go to references
+- `gI` - Go to implementation (`gi` stays as Vim's "insert at last insert")
+- `gy` - Go to type definition (`gt` stays as "next tab")
+- `<leader>ca` - Code action (fix/refactor), normal + visual
+- `<leader>cr` - Rename symbol under cursor
 - `gO` - Open document symbols (outline)
 - `gW` - Open workspace symbols
 - `<leader>th` - Toggle inlay hints
@@ -69,6 +69,7 @@ Quick reference for useful Neovim keybindings in this configuration.
 
 ## File Explorer
 - `-` - Open parent directory (oil.nvim)
+  - In oil: `<C-x>` open in horizontal split, `gR` refresh (`<C-h>`/`<C-l>` stay window navigation)
 - `<leader>e` - Toggle file explorer (Snacks explorer)
 
 ## Git (Gitsigns)

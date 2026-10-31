@@ -355,7 +355,8 @@ do
   -- See `:help gitsigns` to understand what each configuration key does.
   -- Adds git related signs to the gutter, as well as utilities for managing changes
   vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
-  require('gitsigns').setup {
+  local gitsigns = require 'gitsigns'
+  gitsigns.setup {
     signs = {
       add = { text = '+' }, ---@diagnostic disable-line: missing-fields
       change = { text = '~' }, ---@diagnostic disable-line: missing-fields
@@ -363,6 +364,46 @@ do
       topdelete = { text = '‾' }, ---@diagnostic disable-line: missing-fields
       changedelete = { text = '~' }, ---@diagnostic disable-line: missing-fields
     },
+    -- gitsigns.nvim's recommended keymaps:
+    on_attach = function(bufnr)
+      -- Navigation
+      vim.keymap.set('n', ']c', function()
+        if vim.wo.diff then
+          vim.cmd.normal { ']c', bang = true }
+        else
+          gitsigns.nav_hunk 'next'
+        end
+      end, { desc = 'Jump to next git [c]hange', buf = bufnr })
+
+      vim.keymap.set('n', '[c', function()
+        if vim.wo.diff then
+          vim.cmd.normal { '[c', bang = true }
+        else
+          gitsigns.nav_hunk 'prev'
+        end
+      end, { desc = 'Jump to previous git [c]hange', buf = bufnr })
+
+      -- Visual mode actions
+      vim.keymap.set('v', '<leader>hs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git [s]tage hunk', buf = bufnr })
+      vim.keymap.set('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end, { desc = 'git [r]eset hunk', buf = bufnr })
+      -- Normal mode actions
+      vim.keymap.set('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk', buf = bufnr })
+      vim.keymap.set('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk', buf = bufnr })
+      vim.keymap.set('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git [S]tage buffer', buf = bufnr })
+      vim.keymap.set('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer', buf = bufnr })
+      vim.keymap.set('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk', buf = bufnr })
+      vim.keymap.set('n', '<leader>hi', gitsigns.preview_hunk_inline, { desc = 'git preview hunk [i]nline', buf = bufnr })
+      vim.keymap.set('n', '<leader>hb', function() gitsigns.blame_line { full = true } end, { desc = 'git [b]lame line', buf = bufnr })
+      vim.keymap.set('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index', buf = bufnr })
+      vim.keymap.set('n', '<leader>hD', function() gitsigns.diffthis '~' end, { desc = 'git [D]iff against last commit', buf = bufnr })
+      vim.keymap.set('n', '<leader>hQ', function() gitsigns.setqflist 'all' end, { desc = 'git hunk [Q]uickfix list (all files in repo)', buf = bufnr })
+      vim.keymap.set('n', '<leader>hq', gitsigns.setqflist, { desc = 'git hunk [q]uickfix list (all changes in this file)', buf = bufnr })
+      -- Toggles
+      vim.keymap.set('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line', buf = bufnr })
+      vim.keymap.set('n', '<leader>tw', gitsigns.toggle_word_diff, { desc = '[T]oggle git intra-line [w]ord diff', buf = bufnr })
+      -- Text object
+      vim.keymap.set({ 'o', 'x' }, 'ih', gitsigns.select_hunk, { desc = 'text object [i]nside [h]unk', buf = bufnr })
+    end,
   }
 
   -- Useful plugin to show you pending keybinds.
@@ -380,7 +421,16 @@ do
       { '<leader>R', group = '[R]eplace (Spectre)', mode = { 'n', 'v' } },
       { '<leader>b', group = '[B]uffer' },
       { '<leader>x', group = 'E[X]ecute (Tasks)' },
-      { 'gr', group = 'LSP Actions', mode = { 'n' } },
+      { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+      { '<leader>g', group = '[G]it', mode = { 'n', 'v' } },
+      { '<leader>m', group = '[M]ark (Harpoon)' },
+      { '<leader>o', group = '[O]pencode', mode = { 'n', 'x' } },
+      { '<leader>p', group = '[P]icker (Snacks)' },
+      { '<leader>pf', group = '[F]ind' },
+      { '<leader>pg', group = '[G]it' },
+      { '<leader>pl', group = '[L]SP' },
+      { '<leader>ps', group = '[S]earch', mode = { 'n', 'x' } },
+      { '<leader>u', group = '[U]I Toggles' },
     },
   }
 
@@ -540,16 +590,16 @@ do
       local buf = event.buf
 
       -- Find references for the word under your cursor.
-      vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+      vim.keymap.set('n', 'gr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
 
       -- Jump to the implementation of the word under your cursor.
       -- Useful when your language has ways of declaring types without an actual implementation.
-      vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
+      vim.keymap.set('n', 'gI', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
 
       -- Jump to the definition of the word under your cursor.
       -- This is where a variable was first declared, or where a function is defined, etc.
       -- To jump back, press <C-t>.
-      vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+      vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
 
       -- Fuzzy find all the symbols in your current document.
       -- Symbols are things like variables, functions, types, etc.
@@ -562,7 +612,7 @@ do
       -- Jump to the type of the word under your cursor.
       -- Useful when you're not sure what type a variable is and you want to see
       -- the definition of its *type*, not where it was *defined*.
-      vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+      vim.keymap.set('n', 'gy', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto T[y]pe Definition' })
     end,
   })
 
@@ -624,6 +674,13 @@ do
   -- If you're wondering about lsp vs treesitter, you can check out the wonderfully
   -- and elegantly composed help section, `:help lsp-vs-treesitter`
 
+  -- Remove Neovim's built-in `gr*` LSP defaults so `gr` (references) fires
+  -- immediately instead of waiting for a second key. See `:help gr-default`.
+  for _, lhs in ipairs { 'grn', 'gra', 'grr', 'gri', 'grt', 'grx' } do
+    pcall(vim.keymap.del, 'n', lhs)
+  end
+  pcall(vim.keymap.del, 'x', 'gra')
+
   -- Useful status updates for LSP.
   vim.pack.add { gh 'j-hui/fidget.nvim' }
   require('fidget').setup {}
@@ -647,15 +704,15 @@ do
 
       -- Rename the variable under your cursor.
       --  Most Language Servers support renaming across files, etc.
-      map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+      map('<leader>cr', vim.lsp.buf.rename, '[C]ode [R]ename')
 
       -- Execute a code action, usually your cursor needs to be on top of an error
       -- or a suggestion from your LSP for this to activate.
-      map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+      map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
 
       -- WARN: This is not Goto Definition, this is Goto Declaration.
       --  For example, in C this would take you to the header.
-      map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+      map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
       -- The following two autocommands are used to highlight references of the
       -- word under your cursor when your cursor rests there for a little while.
@@ -935,6 +992,9 @@ do
   ---@param language string
   local function treesitter_try_attach(buf, language)
     -- Check if a parser exists and load it
+    -- Check if the buffer is valid (might not be after install completes)
+    if not vim.api.nvim_buf_is_valid(buf) then return end
+
     if not vim.treesitter.language.add(language) then return end
     -- Enable syntax highlighting and other treesitter features
     vim.treesitter.start(buf, language)
@@ -991,11 +1051,10 @@ do
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
   require 'kickstart.plugins.debug'
-  require 'kickstart.plugins.indent_line'
+  -- require 'kickstart.plugins.indent_line' -- replaced by Snacks.indent (<leader>ug)
   require 'kickstart.plugins.lint'
   require 'kickstart.plugins.autopairs'
   -- require 'kickstart.plugins.neo-tree'  -- pruned: using snacks explorer + oil
-  require 'kickstart.plugins.gitsigns' -- adds gitsigns recommended keymaps
 
   -- NOTE: You can add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --
